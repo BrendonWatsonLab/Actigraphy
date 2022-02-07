@@ -1,6 +1,14 @@
 %David's Circles :DDD
 % Let's go
 
+%REQUIREMENTS:
+%This needs something to be loaded called
+%curr_activity_timetable_hourly_binned_mean. This is created by running
+%ActigraphyRun, but more specifically, it's created by the function
+%ProduceActigraphyFinalOutputTable. You can also access this dataset by
+%going into a GeneralOutputs folder and loading MergedBoxActigraphyData dot
+%mat files. Good luck!
+
 shortname = curr_activity_timetable_hourly_binned_mean;
 clockdat = zeros(1440,1);
 
