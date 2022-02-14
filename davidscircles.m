@@ -22,7 +22,7 @@ subplot(1,2,1);
 bar(clockdat');
 
 histcounts = [];
-for i = 1:length(normclockdat)
+for i = 1:length(clockdat)
     histcounts = [histcounts; i*ones(round(clockdat(i)),1)];
 end
 subplot(1,2,2);
