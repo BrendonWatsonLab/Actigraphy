@@ -9,6 +9,9 @@
 %going into a GeneralOutputs folder and loading MergedBoxActigraphyData dot
 %mat files. Good luck!
 
+%Libraries: This also relies on the circular statistics library. It can be
+%found online at: https://www.mathworks.com/matlabcentral/fileexchange/10676-circular-statistics-toolbox-directional-statistics
+
 shortname = curr_activity_timetable_hourly_binned_mean;
 clockdat = zeros(1440,1);
 
@@ -42,7 +45,7 @@ figure;
 subplot(1,2,1);
 polarhistogram(2*pi*(histcounts/1440) - (pi/1440),24);
 hold on;
-overlayingarrow;
+overlayingarrow(max(clockdat),VecDir,VecLength);
 hold off;
 title('Hourly Binned')
 thetaticks(0:15:345)
@@ -51,7 +54,7 @@ thetaticklabels({'00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00'
 subplot(1,2,2);
 polarhistogram((2*pi*(histcounts/1440)) - (pi/1440),1440);
 hold on;
-overlayingarrow;
+overlayingarrow(max(clockdat),VecDir,VecLength);
 hold off;
 title('Minutely Binned');
 thetaticks(0:15:345)

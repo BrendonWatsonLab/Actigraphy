@@ -1,6 +1,9 @@
- %%%Data %%%%
+function overlayingarrow(scale,VecDir,VecLength)
+    %OVERLAYING Summary of this function goes here
+    %   Detailed explanation goes here
+    %%%Data %%%%
     resultant_direction = VecDir;
-    resultant_length = VecLength*100;
+    resultant_length = VecLength*scale;
     %%%%arrow head %%%%
     arrowhead_length    = resultant_length/15; % arrow head length relative to resultant_length
     num_arrowlines = 100;
@@ -19,3 +22,5 @@
     polarplot([t1(1) t1(1)],[0 r1(1)-0.9*arrowhead_length],'r','linewidth',3)
     hold on
     polarplot([t1; t2],[r1; r2],'r')
+
+end
