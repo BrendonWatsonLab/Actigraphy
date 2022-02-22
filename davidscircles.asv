@@ -37,6 +37,9 @@ subplot(1,2,2);
 histogram(histcounts,24);
 title('Hourly Binned');
 
+RayleighPval = circ_rtest(2*pi*(histcounts/1440) - (pi/1440));
+VecLength = circ_r(2*pi*(histcounts/1440) - (pi/1440));
+VecDir = circ_mean(2*pi*(histcounts/1440) - (pi/1440));
 
 figure;
 subplot(1,2,1);
@@ -44,13 +47,12 @@ l = polarhistogram(2*pi*(histcounts/1440) - (pi/1440),24);
 %Toying
 hourhistcounts = [];
 for i = 1:24
-    hourhistcounts = [hourhistcounts; i*ones(round(l.BinCounts(i)),1)];
+    hourhistcounts = [hourhistcounts; i*ones(round(clockdat(i)),1)];
 end
-hourRayleighPval = circ_rtest(2*pi*(hourhistcounts/24) - (pi/24));
-hourVecLength = circ_r(2*pi*(hourhistcounts/24) - (pi/24));
-hourVecDir = circ_mean(2*pi*(hourhistcounts/24) - (pi/24));
+
+
 hold on;
-overlayingarrow(max(l.BinCounts),hourVecDir,hourVecLength);
+overlayingarrow(max(clockdat),VecDir,VecLength);
 hold off;
 title('Hourly Binned')
 thetaticks(0:15:345)
@@ -58,9 +60,6 @@ thetaticklabels({'00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00'
 
 subplot(1,2,2);
 polarhistogram((2*pi*(histcounts/1440)) - (pi/1440),1440);
-RayleighPval = circ_rtest(2*pi*(histcounts/1440) - (pi/1440));
-VecLength = circ_r(2*pi*(histcounts/1440) - (pi/1440));
-VecDir = circ_mean(2*pi*(histcounts/1440) - (pi/1440));
 hold on;
 overlayingarrow(max(clockdat),VecDir,VecLength);
 hold off;
