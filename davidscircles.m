@@ -14,6 +14,8 @@
 
 shortname = curr_activity_timetable_hourly_binned_mean;
 clockdat = zeros(1440,1);
+hourbins = 12;
+
 
 for j = 0:1439
     for i = find((shortname.HrOfDay*60) + shortname.Time.Minute == j)
@@ -40,19 +42,21 @@ title('Hourly Binned');
 
 figure;
 subplot(1,2,1);
-l = polarhistogram(2*pi*(histcounts/1440) - (pi/1440),24);
+l = polarhistogram(2*pi*(histcounts/1440) - (pi/1440),hourbins);
 %Toying
 hourhistcounts = [];
-for i = 1:24
+for i = 1:hourbins
     hourhistcounts = [hourhistcounts; i*ones(round(l.BinCounts(i)),1)];
 end
-hourRayleighPval = circ_rtest(2*pi*(hourhistcounts/24) - (pi/24));
-hourVecLength = circ_r(2*pi*(hourhistcounts/24) - (pi/24));
-hourVecDir = circ_mean(2*pi*(hourhistcounts/24) - (pi/24));
+hourRayleighPval = circ_rtest(2*pi*(hourhistcounts/hourbins) - (pi/hourbins));
+hourVecLength = circ_r(2*pi*(hourhistcounts/hourbins) - (pi/hourbins));
+hourVecDir = circ_mean(2*pi*(hourhistcounts/hourbins) - (pi/hourbins));
 hold on;
-overlayingarrow(max(l.BinCounts),hourVecDir,hourVecLength);
+sumvector = VectorSum(hourbins,l.BinCounts);
+overlayingarrow(1,angle(sumvector),abs(sumvector));
+
 hold off;
-title('Hourly Binned')
+title('Bihourly Binned')
 thetaticks(0:15:345)
 thetaticklabels({'00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'})
 
@@ -62,7 +66,8 @@ RayleighPval = circ_rtest(2*pi*(histcounts/1440) - (pi/1440));
 VecLength = circ_r(2*pi*(histcounts/1440) - (pi/1440));
 VecDir = circ_mean(2*pi*(histcounts/1440) - (pi/1440));
 hold on;
-overlayingarrow(max(clockdat),VecDir,VecLength);
+newsumvector = VectorSum(1440,clockdat');
+overlayingarrow(1,angle(newsumvector),abs(newsumvector));
 hold off;
 title('Minutely Binned');
 thetaticks(0:15:345)
