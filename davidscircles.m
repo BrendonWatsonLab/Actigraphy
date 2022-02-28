@@ -56,7 +56,7 @@ sumvector = VectorSum(hourbins,l.BinCounts);
 overlayingarrow(1,angle(sumvector),abs(sumvector));
 
 hold off;
-title('Bihourly Binned')
+title(['Bihourly Binned P = ',num2str(hourRayleighPval)])
 thetaticks(0:15:345)
 thetaticklabels({'00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'})
 
@@ -69,7 +69,7 @@ hold on;
 newsumvector = VectorSum(1440,clockdat');
 overlayingarrow(1,angle(newsumvector),abs(newsumvector));
 hold off;
-title('Minutely Binned');
+title(['Minutely Binned P = ',num2str(RayleighPval)]);
 thetaticks(0:15:345)
 thetaticklabels({'00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'})
-sgtitle('24hour Plotted NumChangedPixels')
+sgtitle('HR 24hour Plotted NumChangedPixels using Bin Median')
