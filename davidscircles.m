@@ -15,7 +15,11 @@
 shortname = curr_activity_timetable_hourly_binned_mean;
 clockdat = zeros(1440,1);
 hourbins = 12;
+minuteradlimit = 4500;
+hourradlimit = 150000;
 
+shortname.HrOfDay = shortname.HrOfDay + 5;
+shortname.HrOfDay(find(shortname.HrOfDay > 23)) = shortname.HrOfDay(find(shortname.HrOfDay > 23)) - 24;
 
 for j = 0:1439
     for i = find((shortname.HrOfDay*60) + shortname.Time.Minute == j)
@@ -28,8 +32,18 @@ subplot(1,2,1);
 bar(clockdat');
 title('Minutely Binned');
 
+
+
+
+%Okay, so there's this thing where you can either choose to normalize or
+%scale down... I'm doing to scale down and then scale up at the end...
 %normalizing (optional);
-clockdat = round((clockdat / min(clockdat)) * 10);
+scales = 100;
+%clockdat = round((clockdat / min(clockdat)) * 10);
+clockdat = round((clockdat / scales));
+
+
+
 
 histcounts = [];
 for i = 1:length(clockdat)
@@ -52,24 +66,32 @@ hourRayleighPval = circ_rtest(2*pi*(hourhistcounts/hourbins) - (pi/hourbins));
 hourVecLength = circ_r(2*pi*(hourhistcounts/hourbins) - (pi/hourbins));
 hourVecDir = circ_mean(2*pi*(hourhistcounts/hourbins) - (pi/hourbins));
 hold on;
+l.BinCounts = l.BinCounts * scales; % Rescaling up
 sumvector = VectorSum(hourbins,l.BinCounts);
 overlayingarrow(1,angle(sumvector),abs(sumvector));
 
 hold off;
 title(['Bihourly Binned P = ',num2str(hourRayleighPval)])
+
+rlim([0 hourradlimit]);
+
 thetaticks(0:15:345)
 thetaticklabels({'00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'})
 
 subplot(1,2,2);
-polarhistogram((2*pi*(histcounts/1440)) - (pi/1440),1440);
+v = polarhistogram((2*pi*(histcounts/1440)) - (pi/1440),1440);
 RayleighPval = circ_rtest(2*pi*(histcounts/1440) - (pi/1440));
 VecLength = circ_r(2*pi*(histcounts/1440) - (pi/1440));
 VecDir = circ_mean(2*pi*(histcounts/1440) - (pi/1440));
 hold on;
+v.BinCounts = v.BinCounts * scales;
 newsumvector = VectorSum(1440,clockdat');
-overlayingarrow(1,angle(newsumvector),abs(newsumvector));
+overlayingarrow(1,angle(newsumvector),abs(newsumvector) * scales);
 hold off;
 title(['Minutely Binned P = ',num2str(RayleighPval)]);
+
+rlim([0 minuteradlimit]);
+
 thetaticks(0:15:345)
 thetaticklabels({'00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'})
-sgtitle('HR 24hour Plotted NumChangedPixels using Bin Median')
+sgtitle('LR 24hour Plotted NumChangedPixels using Bin Median')

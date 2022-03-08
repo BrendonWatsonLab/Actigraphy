@@ -1,9 +1,9 @@
 function ActigraphyRun(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze)
 
-FoundVideoFilesPath = 'C:\Users\duck7\Documents\Lab Shit\FakeActDat';
-BBParentPath = 'C:\Users\duck7\Documents\Lab Shit\FakeActDat';
-GeneralOutputsPath = 'C:\Users\duck7\Documents\Lab Shit\FakeActDat\GeneralOutputs';
-BBlist = {'01'};
+FoundVideoFilesPath = 'C:\Users\duck7\Documents\BB16 ActigraphyResults-20220126T164933Z-001';
+BBParentPath = 'C:\Users\duck7\Documents\BB16 ActigraphyResults-20220126T164933Z-001';
+GeneralOutputsPath = 'C:\Users\duck7\Documents\BB16 ActigraphyResults-20220126T164933Z-001';
+BBlist = {'16'};
 BBToAnalyze = [true];
 
 %Notes on naming: Alright. Much like a lot of matlab functions that accept
