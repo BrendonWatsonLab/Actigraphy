@@ -23,8 +23,13 @@ shortname.HrOfDay(find(shortname.HrOfDay > 23)) = shortname.HrOfDay(find(shortna
 
 for j = 0:1439
     for i = find((shortname.HrOfDay*60) + shortname.Time.Minute == j)
+<<<<<<< Updated upstream
        temp = shortname.NumChangedPixels(i);
       clockdat(j+1)= median(temp(~isnan(shortname.NumChangedPixels(i)))); %Median can be changed to mean or sum
+=======
+		filtered = i(~isnan(shortname.NumChangedPixels(i)));
+		clockdat(j+1)= sum(shortname.NumChangedPixels(filtered));
+>>>>>>> Stashed changes
     end
 end
 figure;
@@ -45,9 +50,16 @@ clockdat = round((clockdat / scales));
 
 
 
+normclockdat = 10 * clockdat / min(clockdat);
+
 histcounts = [];
+<<<<<<< Updated upstream
 for i = 1:length(clockdat)
     histcounts = [histcounts; i*ones(round(clockdat(i)),1)];
+=======
+for i = 1:length(normclockdat)
+    histcounts = [histcounts; i*ones(round(normclockdat(i)),1)];
+>>>>>>> Stashed changes
 end
 subplot(1,2,2);
 histogram(histcounts,24);

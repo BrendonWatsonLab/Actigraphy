@@ -1,9 +1,11 @@
 function ActigraphyRun(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze)
-
-FoundVideoFilesPath = 'C:\Users\duck7\Documents\Lab Shit\FakeActDat';
-BBParentPath = 'C:\Users\duck7\Documents\Lab Shit\FakeActDat';
-GeneralOutputsPath = 'C:\Users\duck7\Documents\Lab Shit\FakeActDat\GeneralOutputs';
-BBlist = {'01'};
+% FoundVideoFilesPath = 'C:\Users\duck7\Documents\lab shit';
+% BBParentPath = 'C:\Users\duck7\Documents\lab shit';
+% GeneralOutputsPath = 'C:\Users\duck7\Documents\lab shit\GeneralOutputs';
+FoundVideoFilesPath = 'E:\Transcoded Videos';
+BBParentPath = 'E:\Transcoded Videos';
+GeneralOutputsPath = 'E:\Transcoded Videos\GeneralOutputs';
+BBlist = {'02'};
 BBToAnalyze = [true];
 
 %Notes on naming: Alright. Much like a lot of matlab functions that accept
@@ -36,7 +38,7 @@ BBToAnalyze = [true];
 %is where the tables, plots, and merged_actigraphy folders are going to be
 %made. This can be pretty much anywhere.
 
-%BatchProcessVideoFileAnalyzer(FoundVideoFilesPath,BBParentPath,BBlist,BBToAnalyze);
+BatchProcessVideoFileAnalyzer(FoundVideoFilesPath,BBParentPath,BBlist,BBToAnalyze);
 CombineActigraphyOutputResults(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
 ProduceActigraphyFinalOutputTable(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
 ExportCombinedActigraphyOutputs_ToPythonCSV(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
