@@ -1,10 +1,16 @@
 function ActigraphyRun(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze)
 
-FoundVideoFilesPath = 'C:\Users\duck7\Documents\Lab Shit\FakeActDat';
-BBParentPath = 'C:\Users\duck7\Documents\Lab Shit\FakeActDat';
-GeneralOutputsPath = 'C:\Users\duck7\Documents\Lab Shit\FakeActDat\GeneralOutputs';
-BBlist = {'01'};
-BBToAnalyze = [true];
+FoundVideoFilesPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01\Actigraphy Outputs';
+BBParentPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01';
+GeneralOutputsPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01\General Outputs';
+BBlist = {'01', '02'};
+BBToAnalyze = [true, true];
+
+% FoundVideoFilesPath = 'C:\Users\ghimirea\Desktop\David Sucks';
+% BBParentPath = 'C:\Users\ghimirea\Desktop\David Sucks';
+% GeneralOutputsPath = 'C:\Users\ghimirea\Desktop\David Sucks\General Outputs';
+% BBlist = {'01'};
+% BBToAnalyze = [true];
 
 %Notes on naming: Alright. Much like a lot of matlab functions that accept
 %inputs as files from your computer, the names of the files that you put in
@@ -36,7 +42,7 @@ BBToAnalyze = [true];
 %is where the tables, plots, and merged_actigraphy folders are going to be
 %made. This can be pretty much anywhere.
 
-%BatchProcessVideoFileAnalyzer(FoundVideoFilesPath,BBParentPath,BBlist,BBToAnalyze);
+BatchProcessVideoFileAnalyzer(FoundVideoFilesPath,BBParentPath,BBlist,BBToAnalyze);
 CombineActigraphyOutputResults(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
 ProduceActigraphyFinalOutputTable(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
 ExportCombinedActigraphyOutputs_ToPythonCSV(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
