@@ -15,11 +15,11 @@
 shortname = curr_activity_timetable_hourly_binned_mean; %Just a shorter name for the long ass variable to use
 clockdat = zeros(1440,1); %initializing the circular data
 hourbins = 12; %number of bins (wedges on histogram)
-minuteradlimit = 16000000; % sets the radial limit (how large radius the circle plot is)
-hourradlimit = 300000; % same, but... For the hour bins
+minuteradlimit = 16000000; % sets the radial limit for HOUR BINS (how large radius the circle plot is)
+hourradlimit = 350000; % same, but... For the minute bins... I know it's fucking dumb... I messed up sorry
 
 %These two lines below are used to shift the time zones to real time.
-shortname.HrOfDay = shortname.HrOfDay + 4;
+shortname.HrOfDay = shortname.HrOfDay + 5;
 shortname.HrOfDay(find(shortname.HrOfDay > 23)) = shortname.HrOfDay(find(shortname.HrOfDay > 23)) - 24;
 
 
