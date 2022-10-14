@@ -1,12 +1,16 @@
 function ActigraphyRun(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze)
-% FoundVideoFilesPath = 'C:\Users\duck7\Documents\lab shit';
-% BBParentPath = 'C:\Users\duck7\Documents\lab shit';
-% GeneralOutputsPath = 'C:\Users\duck7\Documents\lab shit\GeneralOutputs';
-FoundVideoFilesPath = 'E:\Transcoded Videos';
-BBParentPath = 'E:\Transcoded Videos';
-GeneralOutputsPath = 'E:\Transcoded Videos\GeneralOutputs';
-BBlist = {'02'};
-BBToAnalyze = [true];
+
+FoundVideoFilesPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01\Actigraphy Outputs';
+BBParentPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01';
+GeneralOutputsPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01\General Outputs';
+BBlist = {'01', '02'};
+BBToAnalyze = [true, true];
+
+% FoundVideoFilesPath = 'C:\Users\ghimirea\Desktop\David Sucks';
+% BBParentPath = 'C:\Users\ghimirea\Desktop\David Sucks';
+% GeneralOutputsPath = 'C:\Users\ghimirea\Desktop\David Sucks\General Outputs';
+% BBlist = {'01'};
+% BBToAnalyze = [true];
 
 %Notes on naming: Alright. Much like a lot of matlab functions that accept
 %inputs as files from your computer, the names of the files that you put in

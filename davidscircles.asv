@@ -15,11 +15,11 @@
 shortname = curr_activity_timetable_hourly_binned_mean; %Just a shorter name for the long ass variable to use
 clockdat = zeros(1440,1); %initializing the circular data
 hourbins = 12; %number of bins (wedges on histogram)
-minuteradlimit = 16000000; % sets the radial limit for HOUR BINS (how large radius the circle plot is)
-hourradlimit = 350000; % same, but... For the minute bins... I know it's fucking dumb... I messed up sorry
+minuteradlimit = 500000; % sets the radial limit (how large radius the circle plot is)
+hourradlimit = 35000000; % same, but... For the hour bins
 
 %These two lines below are used to shift the time zones to real time.
-shortname.HrOfDay = shortname.HrOfDay + 5;
+shortname.HrOfDay = shortname.HrOfDay + 4;
 shortname.HrOfDay(find(shortname.HrOfDay > 23)) = shortname.HrOfDay(find(shortname.HrOfDay > 23)) - 24;
 
 
@@ -49,16 +49,9 @@ scales = 100;
 
 
 
-normclockdat = 10 * clockdat / min(clockdat);
-
 histcounts = [];
-<<<<<<< Updated upstream
 for i = 1:length(clockdat)
     histcounts = [histcounts; i*ones(round(clockdat(i)),1)];
-=======
-for i = 1:length(normclockdat)
-    histcounts = [histcounts; i*ones(round(normclockdat(i)),1)];
->>>>>>> Stashed changes
 end
 subplot(1,2,2);
 histogram(histcounts,24);
@@ -105,4 +98,4 @@ rlim([0 hourradlimit]);
 
 thetaticks(0:15:345)
 thetaticklabels({'00:00','01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'})
-sgtitle('BB01 24hour Plotted NumChangedPixels using Bin Median')
+sgtitle('BB02 24hour Plotted NumChangedPixels using Bin Median')
