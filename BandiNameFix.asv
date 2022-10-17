@@ -22,17 +22,16 @@ vids = dir(fullfile(fileloc,'*.mp4'));
 
 for i = 1:length(vids)
     whatitis = vids(i).name;
-    whatitneedstobe = whatitis(whatitis~='-'); %We also need to add a '0' between SS and MS digits in the video name.
+    whatitneedstobe = whatitis(whatitis~='-');
     comps = split(whatitneedstobe,' ');
     if length(comps)~=1
         whatitneedstobe = [comps{1} comps{2} '-' comps{3}];
         comps = split(whatitneedstobe,'.');
 		
 		%10.17.22, Josh; OBS has a standard '0' separator in the video timestamp after the HHMMSS values
-		%Ex: for a video that was started at 1AM,02MIN,03SEC,456MS: the last part of the video name should be: '...-0102030456'
+		%Ex: for a video that was started at 1AM,01MIN,01SEC,100MS: the last part of the video name should be: '...-0101010100'
         %Add this '0' separator to the videotimestamp:
-		insertedZeroSeparator = [comps{1}(1:34) '0' comps{1}(35:end)];
-		comps{1} = insertedZeroSeparator;
+		
 		whatitneedstobe = [comps{1} comps{2}];
         
         movefile([fileloc '\' whatitis], [fileloc '\' whatitneedstobe]);
