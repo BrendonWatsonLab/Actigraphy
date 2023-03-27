@@ -55,6 +55,7 @@ end
 %is where the tables, plots, and merged_actigraphy folders are going to be
 %made. This can be pretty much anywhere.
 
+%GenerateFoundVideoFiles(FoundVideoFilesPath,BBParentPath,BBlist,BBToAnalyze);
 BatchProcessVideoFileAnalyzer(FoundVideoFilesPath,BBParentPath,BBlist,BBToAnalyze);
 CombineActigraphyOutputResults(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
 ProduceActigraphyFinalOutputTable(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
