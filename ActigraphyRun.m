@@ -1,10 +1,23 @@
 function ActigraphyRun(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze)
 
-FoundVideoFilesPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01\Actigraphy Outputs';
-BBParentPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01';
-GeneralOutputsPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01\General Outputs';
-BBlist = {'01', '02'};
-BBToAnalyze = [true, true];
+%% Hardcoded Values: 
+
+AnalysisComputerisScatha = true;
+
+
+if AnalysisComputerisScatha
+    FoundVideoFilesPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01\Actigraphy Outputs';
+    BBParentPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01';
+    GeneralOutputsPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01\General Outputs';
+    BBlist = {'01', '02'};
+    BBToAnalyze = [true, true];
+else 
+    FoundVideoFilesPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01\Actigraphy Outputs';
+    BBParentPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01';
+    GeneralOutputsPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01\General Outputs';
+    BBlist = {'01', '02'};
+    BBToAnalyze = [true, true];
+end 
 
 % FoundVideoFilesPath = 'C:\Users\ghimirea\Desktop\David Sucks';
 % BBParentPath = 'C:\Users\ghimirea\Desktop\David Sucks';

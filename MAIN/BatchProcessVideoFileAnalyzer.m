@@ -1,34 +1,11 @@
 function BatchProcessVideoFileAnalyzer(FoundVideoFilesPath,BBParentPath,BBlist,BBToAnalyze)
 % BatchProcessVideoFileAnalyzer
 % Pho Hale, 5/1/2020
-% Actigraphy Pipeline Stage: 1
-% Iterates over the transcoded .mp4 video files produced by the behavioral box project, and creates an output FoundVideoFiles.mat data file containing a list of video files and metadata about them.
-% Next, it uses this list of found video files to loop through them and compute actigraphy data for each of them. This data is saved out to a video-specific actigraphy file (meaning 1 per video) in the actigraphy directory/bbID folder.
+% Actigraphy Pipeline Stage: 
+% Use the list of found video files (foundvideofiles.mat) to loop through them and compute actigraphy data for each of them. This data is saved out to a video-specific actigraphy file (meaning 1 per video) in the actigraphy directory/bbID folder.
 % It tries not to over-write previous results, and it stores a list of the videos that have been processed in a variable named all_videos_output_data stored in FoundVideoFiles.mat
 % Estimated Runtime: ~1hr per 4hr video
 
-%% Allow the user to select the directories containing the video files if they aren't specified:
-
-addpath(genpath('../Helpers'));
-%% Set default datetime display properties (this doesn't affect the values stored, only their display/preview in MATLAB)
-datetime.setDefaultFormats('default','yyyy-MM-dd hh:mm:ss.SSS');
-time_reference = datenum('1970', 'yyyy');
-
-%output_found_videos_file_name = 'FoundVideoFiles_WatsonBB16.mat'; % For Overseer:
-output_found_videos_file_name = fullfile(FoundVideoFilesPath,'FoundVideoFiles.mat');%'C:\Users\duck7\Documents\lab shit\FoundVideoFiles.mat'); %David here!
-% output_found_videos_file_name = 'FoundVideoFiles_WatsonBB16.mat'; % For WatsonBB16:
-
-bbIDs = BBlist; %{'02','04','06','09','12','14','15','17'};
-% current_included_bbIDs = [true, true, true, true, true, false, false, false];
-current_included_bbIDs = BBToAnalyze; %[false, false, false, false, false, false, false, true];
-
-DriveRootPath = [BBParentPath, '\']; % For Overseer:
-% DriveRootPath = 'O:\'; % For WatsonBB16:
-
-activeTranscodedVideosPathRoot = [DriveRootPath, 'BB'];
-
-%% Load Existing 'FoundVideoFiles.mat' results if they exist, otherwise create them. Searches for additional files or included bbID folders no matter what and merges them with the loaded ones:
-[all_videos_output_data, totalCombinedVideoCount, totalBoxFolderCount] = FnSmartFindAllVideoFiles(bbIDs, activeTranscodedVideosPathRoot, output_found_videos_file_name);
 
 %% Loop through the bbIDs again to process them:
 %% TODO for 4/27/2020: Call the "BatchAnalyzeVideo.m" Helper script.
