@@ -8,12 +8,11 @@ function requadrantize(BBlist, BBToAnalyze)
 %% loading videos
 
 load('FoundVideoFiles.mat')
-num_boxes = 1; %Set to 1 for testing
-%num_boxes = size(BBlist,2);
-%num_boxes=size(bbIDs,2); - Priya was using bbIDs from foundvideofiles I think?
+num_boxes = size(BBlist,2);
+%num_boxes=size(bbIDs,2);
 
 for k=1:num_boxes
-   %if BBToAnalyze(k) == 1 4.2023 Josh-TODO only quadrantize boxes we're interested in.
+   %if BBToAnalyze(k) == 1 4.2023 Josh-TODO only quadrantize boxes we're interes
 	box_number=all_videos_output_data{1,k}.curr_bbID;
 	box_folder=sprintf('BB%s',box_number);
 	formatSpec='%s\\CurrentExperiment';

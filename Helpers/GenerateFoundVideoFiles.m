@@ -1,4 +1,4 @@
-function [foundvideofiles] = GenerateFoundVideoFiles(BBlist, BBToAnalyze, BBParentPath, FoundVideoFilesPath, ExperimentToAnalyze, CohortToAnalyze)
+function [current_included_bbIDs] = GenerateFoundVideoFiles(BBlist, BBToAnalyze, BBParentPath, FoundVideoFilesPath, ExperimentToAnalyze, CohortToAnalyze)
 % GenerateFoundVideoFiles - make a Foundvideofiles.mat file that is used for quadrantizing and actigraphy.
 
 % Iterates over .mp4 video files produced by the behavioral box project. 
