@@ -1,4 +1,4 @@
-function requadrantize(BBlist, BBToAnalyze)
+function requadrantize(FoundVideoFilesPath, BBlist, BBToAnalyze, BBParentPath)
 % Author: Priya Vijayakumar, vijayak@umich.edu
 % Last Update: 12/6/22 3:30PM EST
 %READ: requadrantize.m needs to be in the SAME folder as 1) BB## folder (containing "Current Experiment" folder with videos to analyze)...
@@ -7,18 +7,22 @@ function requadrantize(BBlist, BBToAnalyze)
 % Other Generated Outputs: 1) black_frame.jpg 2)black_frame.mp4 
 %% loading videos
 
+addpath(genpath(FoundVideoFilesPath)) %Folder containing FoundVideoFiles.mat 
+addpath(genpath(BBParentPath)) %Folder on Overseer containing the many BB folders with video files from the expt. 
 load('FoundVideoFiles.mat')
-num_boxes = 1; %Set to 1 for testing
+
+num_boxes = 1; %Set to 1 for testing, use BBlist or BBToAnalyze later.
 %num_boxes = size(BBlist,2);
 %num_boxes=size(bbIDs,2); - Priya was using bbIDs from foundvideofiles I think?
 
 for k=1:num_boxes
    %if BBToAnalyze(k) == 1 4.2023 Josh-TODO only quadrantize boxes we're interested in.
-	box_number=all_videos_output_data{1,k}.curr_bbID;
-	box_folder=sprintf('BB%s',box_number);
-	formatSpec='%s\\CurrentExperiment';
-	box_folder=sprintf(formatSpec,box_folder);
-	addpath(box_folder);
+    box_folder = all_videos_output_data{1,k}.curr_folder;
+	% box_number=all_videos_output_data{1,k}.curr_bbID;
+	% box_folder=sprintf('BB%s',box_number);
+	% formatSpec='%s\\CurrentExperiment';
+	% box_folder=sprintf(formatSpec,box_folder);
+	% addpath(box_folder);
 	vid_data=all_videos_output_data{1,k}.videoFilesData;
 	vid_data=struct2table(vid_data);
 	% vid_dir=vid_data.folder{1,1}
@@ -28,12 +32,12 @@ for k=1:num_boxes
 	all_vids={};
  
 	for i=1:total_vids
-		filenames=vid_name{i,1};
-		[filepath,name,ext]=fileparts(which(filenames));
-		file=fullfile(filepath,filenames);
-		video=VideoReader(file);
+        %addpath(all_videos_output_data{1,i}.curr_folder);
+        videoToAnalyze = vid_name{i};
+		%videoToAnalyze = fullfile(box_folder,videoToAnalyze);
+		video = VideoReader(videoToAnalyze);
 		all_vids{i}=video;
-		fprintf('BB%s Video %d: Loaded \n',box_number,i)
+		fprintf('BB%s Video %d: Loaded \n',box_folder,i)
 	end
 	
 	v1=all_vids{1,1}; row=v1.Height; col=v1.Width;

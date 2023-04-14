@@ -13,7 +13,7 @@ BBToAnalyze = [true, false, false, false, false, false, false,...
               
 if AnalysisComputerisScatha
     FoundVideoFilesPath = '/home/ghimirea/Documents/Experiment05Quadrantizing';
-    BBParentPath = '/media/OverseerF:/Videos';
+    BBParentPath = '/media/OverseerF/Videos';
     GeneralOutputsPath = '/home/ghimirea/Documents/Experiment05Quadrantizing/General_Outputs';
 else 
     FoundVideoFilesPath = 'C:\Users\ghimirea\Desktop\Local Actisgraphy\Experiment_04Cohort01\Actigraphy Outputs';
@@ -61,7 +61,7 @@ ExperimentToAnalyze = ['Experiment', ExperimentNumber];
 CohortToAnalyze = ['Cohort', CohortNumber];
 
 [current_included_bbIDs] = GenerateFoundVideoFiles(BBlist,BBToAnalyze,BBParentPath,FoundVideoFilesPath, ExperimentToAnalyze, CohortToAnalyze);
-requadrantize(BBlist, BBToAnalyze);
+requadrantize( FoundVideoFilesPath,BBlist, BBToAnalyze, BBParentPath);
 BatchProcessVideoFileAnalyzer(FoundVideoFilesPath,BBParentPath,BBlist,BBToAnalyze);
 CombineActigraphyOutputResults(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
 ProduceActigraphyFinalOutputTable(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
