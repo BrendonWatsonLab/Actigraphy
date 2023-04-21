@@ -12,9 +12,11 @@ BBToAnalyze = [true, false, false, false, false, false, false,...
     false, false, false, false, false, false, false, false];
               
 if AnalysisComputerisScatha
-    FoundVideoFilesPath = '/home/ghimirea/Documents/Experiment05Quadrantizing';
+    FoundVideoFilesPath = '/data/Josh/Test_Quadrantizing';
+    %FoundVideoFilesPath = '~/Documents/Experiment05Quadrantizing';
     BBParentPath = '/media/OverseerF/Videos';
-    GeneralOutputsPath = '/home/ghimirea/Documents/Experiment05Quadrantizing/General_Outputs';
+    GeneralOutputsPath = '/data/Josh/Test_Quadrantizing/General_Outputs';
+    %GeneralOutputsPath = '~/Documents/Experiment05Quadrantizing/General_Outputs';
 else 
     FoundVideoFilesPath = 'C:\Users\ghimirea\Desktop\Local Actisgraphy\Experiment_04Cohort01\Actigraphy Outputs';
     BBParentPath = 'C:\Users\ghimirea\Desktop\Local Actigraphy\Experiment_04Cohort01';

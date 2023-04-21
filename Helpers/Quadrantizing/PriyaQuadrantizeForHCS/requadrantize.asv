@@ -7,9 +7,11 @@ function requadrantize(FoundVideoFilesPath, BBlist, BBToAnalyze, BBParentPath)
 % Other Generated Outputs: 1) black_frame.jpg 2)black_frame.mp4 
 %% loading videos
 
-load(FoundVideoFilesPath, 'Found')
-addpath(genpath(BBParentPath))
-num_boxes = 1; %Set to 1 for testing, use BBlist or BBToAnalyze later.
+addpath(genpath(FoundVideoFilesPath))   %Folder containing FoundVideoFiles.mat 
+addpath(genpath(BBParentPath))          %Folder on Overseer containing the many BB folders with video files from the expt. 
+load('FoundVideoFiles.mat')
+
+num_boxes = 1;                          %Set to 1 for testing, use BBlist or BBToAnalyze later.
 %num_boxes = size(BBlist,2);
 %num_boxes=size(bbIDs,2); - Priya was using bbIDs from foundvideofiles I think?
 
@@ -30,12 +32,20 @@ for k=1:num_boxes
 	all_vids={};
  
 	for i=1:total_vids
-        %addpath(all_videos_output_data{1,i}.curr_folder);
+        addpath(all_videos_output_data{1,i}.curr_folder); %messy way to do this now, but ffprobe is difficult to use without this?
+        %cd(all_videos_output_data{1,i}.curr_folder); %messy way to do this now, but ffprobe is difficult to use without this?
+
         videoToAnalyze = vid_name{i};
+        [~, videoNumFrames] = system(sprintf('ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -print_format csv %s', videoToAnalyze));
+        num
+        %Note, this command also seems to work at the same speed, but not for windows: 
+        %!ffmpeg -i BehavioralBox_B01_T20230113-0528250041.mp4 -map 0:v:0 -c copy -f null -y /dev/null 2>&1 | grep -Eo 'frame= *[0-9]+ *' | grep -Eo '[0-9]+' | tail -1
 		%videoToAnalyze = fullfile(box_folder,videoToAnalyze);
-		video = VideoReader(videoToAnalyze);
-		all_vids{i}=video;
+		video = string(vid_data{k,1});
+		%all_vids{i}=VideoReader(video);
+        x=VideoReader(video);
 		fprintf('BB%s Video %d: Loaded \n',box_folder,i)
+        rmpath(all_videos_output_data{1,i}.curr_folder);
 	end
 	
 	v1=all_vids{1,1}; row=v1.Height; col=v1.Width;
