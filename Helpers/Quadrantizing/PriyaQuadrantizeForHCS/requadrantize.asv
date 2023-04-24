@@ -30,23 +30,26 @@ for k=1:num_boxes
 	vid_name=vid_data.name;
 	total_vids=size(vid_data,1);
 	all_vids={};
- 
-	for i=1:total_vids
-        addpath(all_videos_output_data{1,i}.curr_folder); %messy way to do this now, but ffprobe is difficult to use without this?
-        %cd(all_videos_output_data{1,i}.curr_folder); %messy way to do this now, but ffprobe is difficult to use without this?
 
-        videoToAnalyze = vid_name{i};
-        [~, videoNumFrames] = system(sprintf('ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -print_format csv %s', videoToAnalyze));
-        num
-        %Note, this command also seems to work at the same speed, but not for windows: 
-        %!ffmpeg -i BehavioralBox_B01_T20230113-0528250041.mp4 -map 0:v:0 -c copy -f null -y /dev/null 2>&1 | grep -Eo 'frame= *[0-9]+ *' | grep -Eo '[0-9]+' | tail -1
-		%videoToAnalyze = fullfile(box_folder,videoToAnalyze);
-		video = string(vid_data{k,1});
-		%all_vids{i}=VideoReader(video);
-        x=VideoReader(video);
-		fprintf('BB%s Video %d: Loaded \n',box_folder,i)
+    for i = 1:num_boxes
+        addpath(all_videos_output_data{1,i}.curr_folder); %messy way to do this now, but ffprobe is difficult to use without this?
+        cd(all_videos_output_data{1,i}.curr_folder); %messy way to do this now, but ffprobe is difficult to use without this?
+	    for j = 1:total_vids      
+            videoToAnalyze = vid_name{j};
+            [~, videoNumFrames] = system(sprintf('ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -print_format csv %s', videoToAnalyze)); 
+            videoNumFrames = str2num(videoNumFrames(8:end));
+            all_videos_output_data{1, 1}.videoFilesData(j).numFrames = videoNumFrames;
+            %Note, this command also seems to work at the same speed, but not for windows: 
+            %!ffmpeg -i BehavioralBox_B01_T20230113-0528250041.mp4 -map 0:v:0 -c copy -f null -y /dev/null 2>&1 | grep -Eo 'frame= *[0-9]+ *' | grep -Eo '[0-9]+' | tail -1
+		    
+            %videoToAnalyze = fullfile(box_folder,videoToAnalyze);
+		    video = string(vid_data{k,1});
+		    fprintf('BB%s Video %d: Loaded \n',box_folder,i)            
+        end
+
+       
         rmpath(all_videos_output_data{1,i}.curr_folder);
-	end
+    end    
 	
 	v1=all_vids{1,1}; row=v1.Height; col=v1.Width;
 

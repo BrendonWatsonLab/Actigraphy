@@ -30,23 +30,27 @@ for k=1:num_boxes
 	vid_name=vid_data.name;
 	total_vids=size(vid_data,1);
 	all_vids={};
- 
-	for i=1:total_vids
+
+    for i = 1:num_boxes
         addpath(all_videos_output_data{1,i}.curr_folder); %messy way to do this now, but ffprobe is difficult to use without this?
         cd(all_videos_output_data{1,i}.curr_folder); %messy way to do this now, but ffprobe is difficult to use without this?
+	    for j = 1:total_vids      
+            videoToAnalyze = vid_name{j};
+            [~, videoNumFrames] = system(sprintf('ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -print_format csv %s', videoToAnalyze)); 
+            videoNumFrames = str2num(videoNumFrames(8:end));
+            all_videos_output_data{1, 1}.videoFilesData(j).numFrames = videoNumFrames;
+            %Note, this command also seems to work at the same speed, but not for windows: 
+            %!ffmpeg -i BehavioralBox_B01_T20230113-0528250041.mp4 -map 0:v:0 -c copy -f null -y /dev/null 2>&1 | grep -Eo 'frame= *[0-9]+ *' | grep -Eo '[0-9]+' | tail -1
+		    
+            %videoToAnalyze = fullfile(box_folder,videoToAnalyze);
+		    video = string(vid_data{k,1});
+            all_vids{i} = video;
+		    fprintf('BB%s Video %d: %d Frames \n',box_folder,j, videoNumFrames) %4.24.23 This message is wrong, since no longer loading vids. This is             
+        end
 
-        videoToAnalyze = vid_name{i};
-        [~, videoNumFrames] = system(sprintf('ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -print_format csv %s', videoToAnalyze)); 
-        videoNumFrames = str2num(videoNumFrames(8:end));
-        all_videos_output_data{1, 1}.videoFilesData(i).numFrames = videoNumFrames;
-        %Note, this command also seems to work at the same speed, but not for windows: 
-        %!ffmpeg -i BehavioralBox_B01_T20230113-0528250041.mp4 -map 0:v:0 -c copy -f null -y /dev/null 2>&1 | grep -Eo 'frame= *[0-9]+ *' | grep -Eo '[0-9]+' | tail -1
-		
-        %videoToAnalyze = fullfile(box_folder,videoToAnalyze);
-		video = string(vid_data{k,1});
-		fprintf('BB%s Video %d: Loaded \n',box_folder,i)
-        rmpath(all_videos_output_data{1,i}.curr_folder);
-	end
+       
+        
+    end    
 	
 	v1=all_vids{1,1}; row=v1.Height; col=v1.Width;
 
@@ -189,7 +193,8 @@ for k=1:num_boxes
 		end
 		eval(['!ffmpeg -i "' v1 '" -i "' v3 '" -i "' v2 '" -i "' v4 '" -filter_complex " [0:v] setpts=PTS-STARTPTS, scale=qvga [a0]; [1:v] setpts=PTS-STARTPTS, scale=qvga [a1]; [2:v] setpts=PTS-STARTPTS, scale=qvga [a2]; [3:v] setpts=PTS-STARTPTS, scale=qvga [a3]; [a0][a1][a2][a3]xstack=inputs=4:layout=0_0|0_h0|w0_0|w0_h0[out] " -map "[out]" -c:v libx264 "' output '"'])  ;
 		sprintf('Quadrantized Video #%d is Complete!',j);
-	end
+    end
+    rmpath(all_videos_output_data{1,i}.curr_folder);%Josh- from line 35, messy way to do this now, but ffprobe is difficult to use without this?
 end 
 	
 end
