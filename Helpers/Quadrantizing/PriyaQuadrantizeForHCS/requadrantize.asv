@@ -34,33 +34,39 @@ for k=1:num_boxes
     for i = 1:num_boxes
         addpath(all_videos_output_data{1,i}.curr_folder); %messy way to do this now, but ffprobe is difficult to use without this?
         cd(all_videos_output_data{1,i}.curr_folder); %messy way to do this now, but ffprobe is difficult to use without this?
-	    for j = 1:total_vids      
+	    for j = 1:6      %for j = 1:total_vids 1-6 for quick testing
             videoToAnalyze = vid_name{j};
-            [~, videoNumFrames] = system(sprintf('ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=nb_read_packets -print_format csv %s', videoToAnalyze)); 
-            videoNumFrames = str2num(videoNumFrames(8:end));
+            [~, videoMetadata] = system(sprintf('ffprobe -v error -select_streams v:0 -count_packets -show_entries stream=width,height,nb_read_packets -print_format csv %s', videoToAnalyze)); 
+            videoHeight = str2num(videoMetadata(8:10));
+            videoWidth = str2num(videoMetadata(12:14));
+            videoNumFrames = str2num(videoMetadata(16:end));
+            all_videos_output_data{1, 1}.videoFilesData(j).height = videoHeight;
+            all_videos_output_data{1, 1}.videoFilesData(j).width = videoWidth;
             all_videos_output_data{1, 1}.videoFilesData(j).numFrames = videoNumFrames;
             %Note, this command also seems to work at the same speed, but not for windows: 
             %!ffmpeg -i BehavioralBox_B01_T20230113-0528250041.mp4 -map 0:v:0 -c copy -f null -y /dev/null 2>&1 | grep -Eo 'frame= *[0-9]+ *' | grep -Eo '[0-9]+' | tail -1
 		    
-            %videoToAnalyze = fullfile(box_folder,videoToAnalyze);
-		    video = string(vid_data{k,1});
-		    fprintf('BB%s Video %d: Loaded \n',box_folder,i)            
+            %videoToAnalyze = fullfile(box_folder,videoToAnalyze)
+		    fprintf('BB%s Video %d: %d Frames \n',box_folder,j, videoNumFrames)          
         end
 
        
-        rmpath(all_videos_output_data{1,i}.curr_folder);
+        
     end    
 	
 	v1=all_vids{1,1}; row=v1.Height; col=v1.Width;
+    % v1 = all_videos_output_data{1, i}.videoFilesData(1).name;
+    % row = all_videos_output_data{1, i}.videoFilesData(1).videoHeight;
+    % col = vall_videos_output_data{1, i}.videoFilesData(1).videoWidth;
 
 	%% videos properties (appears to be the most time-intensive step)
 
-	x=total_vids;
-	vid_names=cell(1,x);
-	vid_filepaths=cell(1,x);
-	frames=zeros(1,x);
+	%x=total_vids;
+	%vid_names=cell(1,x); %refer to all_videos_output_data{1, i}.videoFilesData.name    for the name of BB01videos. 
+	%vid_filepaths=cell(1,x); %refer to all_videos_output_data{1, i}.videoFilesData.folder    for the filepaths of BB01videos.
+	frames=zeros(1,x); %refer to all_videos_output_data{1, i}.videoFilesData.numFrames    for the name of BB01videos. 
 
-	for i=1:x
+	for i=1:total_vids
 		video=all_vids(i);
 		video=video{1};
 		vid_names{1,i}=video.Name;
@@ -69,23 +75,23 @@ for k=1:num_boxes
 	end 
 
 	min_frames=min(frames); %minimum number of frames
-	y= ceil(x/4); %number of quadrants needed
+	y= ceil(total_vids/4); %number of quadrants needed
 	empty= zeros(2,2,y); 
-	remainder=mod(x,4); 
+	remainder=mod(total_vids,4); 
 
 	%% determining index of each video
 
-	index_list=zeros(1,x);
+	index_list=zeros(1,total_vids);
 
 	if remainder==0
-		for i=1:x
+		for i=1:total_vids
 			index_list(1:y)=1;
 			index_list(y+1:2*y)=2;
 			index_list(2*y+1:3*y)=3;
 			index_list(3*y+1:4*y)=4; 
 		end 
 	elseif remainder==1
-		for i=1:x
+		for i=1:total_vids
 			index_list(1:y)=1;
 			index_list(y+1:2*y-1)=2;
 			index_list(2*y:3*y-2)=3;
@@ -93,7 +99,7 @@ for k=1:num_boxes
 		end 
 
 	elseif remainder==2
-		for i=1:x
+		for i=1:total_vids
 			index_list(1:y)=1;
 			index_list(y+1:2*y)=2;
 			index_list(2*y+1:3*y-1)=3;
@@ -101,7 +107,7 @@ for k=1:num_boxes
 		end 
 
 	elseif remainder==3
-		for i=1:x
+		for i=1:total_vids
 			index_list(1:y)=1;
 			index_list(y+1:2*y)=2;
 			index_list(2*y+1:3*y)=3;
@@ -119,7 +125,7 @@ for k=1:num_boxes
 	%puts videos in list based on their assigned index
 	vid1=[]; vid2=[]; vid3=[]; vid4=[];
 
-	for i=1:x
+	for i=1:total_vids
 		if index_list(1,i)==1
 			vid1= [vid1 all_vids(1,i)];zero1=cell(1,grayframes-num_1);
 		elseif index_list(1,i)==2
@@ -192,7 +198,8 @@ for k=1:num_boxes
 		end
 		eval(['!ffmpeg -i "' v1 '" -i "' v3 '" -i "' v2 '" -i "' v4 '" -filter_complex " [0:v] setpts=PTS-STARTPTS, scale=qvga [a0]; [1:v] setpts=PTS-STARTPTS, scale=qvga [a1]; [2:v] setpts=PTS-STARTPTS, scale=qvga [a2]; [3:v] setpts=PTS-STARTPTS, scale=qvga [a3]; [a0][a1][a2][a3]xstack=inputs=4:layout=0_0|0_h0|w0_0|w0_h0[out] " -map "[out]" -c:v libx264 "' output '"'])  ;
 		sprintf('Quadrantized Video #%d is Complete!',j);
-	end
+    end
+    rmpath(all_videos_output_data{1,i}.curr_folder);%Josh- from line 35, messy way to do this now, but ffprobe is difficult to use without this?
 end 
 	
 end
