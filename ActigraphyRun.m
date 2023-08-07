@@ -63,7 +63,7 @@ ExperimentToAnalyze = ['Experiment', ExperimentNumber];
 CohortToAnalyze = ['Cohort', CohortNumber];
 
 [current_included_bbIDs] = GenerateFoundVideoFiles(BBlist,BBToAnalyze,BBParentPath,FoundVideoFilesPath, ExperimentToAnalyze, CohortToAnalyze);
-requadrantize( FoundVideoFilesPath,BBlist, BBToAnalyze, BBParentPath);
+joshRequadrantize( FoundVideoFilesPath,BBlist, BBToAnalyze, BBParentPath);
 % BatchProcessVideoFileAnalyzer(FoundVideoFilesPath,BBParentPath,BBlist,BBToAnalyze);
 % CombineActigraphyOutputResults(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
 % ProduceActigraphyFinalOutputTable(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
