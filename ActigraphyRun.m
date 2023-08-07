@@ -14,7 +14,7 @@ BBToAnalyze = [true, false, false, false, false, false, false,...
 if AnalysisComputerisScatha
     FoundVideoFilesPath = '/data/Josh/Test_Quadrantizing';
     %FoundVideoFilesPath = '~/Documents/Experiment05Quadrantizing';
-    BBParentPath = '/media/OverseerF/Videos';
+    BBParentPath = '/mnt/OverseerF/Videos';
     GeneralOutputsPath = '/data/Josh/Test_Quadrantizing/General_Outputs';
     %GeneralOutputsPath = '~/Documents/Experiment05Quadrantizing/General_Outputs';
 else 
@@ -64,11 +64,11 @@ CohortToAnalyze = ['Cohort', CohortNumber];
 
 [current_included_bbIDs] = GenerateFoundVideoFiles(BBlist,BBToAnalyze,BBParentPath,FoundVideoFilesPath, ExperimentToAnalyze, CohortToAnalyze);
 requadrantize( FoundVideoFilesPath,BBlist, BBToAnalyze, BBParentPath);
-BatchProcessVideoFileAnalyzer(FoundVideoFilesPath,BBParentPath,BBlist,BBToAnalyze);
-CombineActigraphyOutputResults(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
-ProduceActigraphyFinalOutputTable(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
-ExportCombinedActigraphyOutputs_ToPythonCSV(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
-ProduceActigraphyFinalOutputPlots(FoundVideoFilesPath,GeneralOutputsPath,BBlist,BBToAnalyze);
+% BatchProcessVideoFileAnalyzer(FoundVideoFilesPath,BBParentPath,BBlist,BBToAnalyze);
+% CombineActigraphyOutputResults(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
+% ProduceActigraphyFinalOutputTable(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
+% ExportCombinedActigraphyOutputs_ToPythonCSV(FoundVideoFilesPath,BBParentPath,GeneralOutputsPath,BBlist,BBToAnalyze);
+% ProduceActigraphyFinalOutputPlots(FoundVideoFilesPath,GeneralOutputsPath,BBlist,BBToAnalyze);
 
 
 end
